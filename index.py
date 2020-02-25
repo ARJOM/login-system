@@ -8,10 +8,10 @@ root.geometry("600x300")
 root.configure(background="white")
 root.resizable(width=False, height=False)
 # Caso queira deixar transparente
-#root.atributes("-alpha", 0.9)
+# root.atributes("-alpha", 0.9)
 
 # Carregando imagens
-logo =PhotoImage(file="icons/logo.png")
+logo = PhotoImage(file="icons/logo.png")
 
 # Widgets
 LeftFrame = Frame(root, width=200, height=300, bg="MIDNIGHTBLUE", relief="raise")
@@ -27,7 +27,7 @@ UserLabel = Label(RightFrame, text="Username:", font=("Century Gothic", 20), bg=
 UserLabel.place(x=5, y=100)
 
 UserEntry = ttk.Entry(RightFrame, width=25)
-UserEntry.place(x=150,  y=110)
+UserEntry.place(x=150, y=110)
 
 PassLabel = Label(RightFrame, text="Password:", font=("Century gothic", 20), bg="MIDNIGHTBLUE", fg="White")
 PassLabel.place(x=5, y=150)
@@ -35,7 +35,7 @@ PassLabel.place(x=5, y=150)
 PassEntry = ttk.Entry(RightFrame, width=25)
 PassEntry.place(x=150, y=160)
 
-#Botoes
+# Botoes
 LoginButton = ttk.Button(RightFrame, text="Login", width=25)
 LoginButton.place(x=100, y=225)
 
