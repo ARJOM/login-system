@@ -1,13 +1,14 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+import databaser
 
 root = Tk()
 root.title("DP Systems - Acess Panel")
 root.geometry("600x300")
 root.configure(background="white")
 root.resizable(width=False, height=False)
-# root.iconbitmap(default="icons/LogoIcon.ico")
+# root.iconbitmap(bitmap="icons/LogoIcon.ico", default="icons/LogoIcon.ico")
 # Caso queira deixar transparente
 # root.atributes("-alpha", 0.9)
 
@@ -59,8 +60,21 @@ def register():
     EmailEntry = ttk.Entry(RightFrame, width=25)
     EmailEntry.place(x=150, y=60)
 
+    def registerToDatabase():
+        name = NameEntry.get()
+        email = EmailEntry.get()
+        username = UserEntry.get()
+        password = PassEntry.get()
+
+        databaser.cursor.execute("""
+        insert into usuarios(name, email, username, password)
+        values (?, ?, ?, ?)
+        """, (name, email, username, password))
+        databaser.conn.commit()
+        messagebox.showinfo(title="Register Infor", message="Registrado com sucesso")
+
     # Inserindo botões de cadastro
-    Register = ttk.Button(RightFrame, text="Register", width=25)
+    Register = ttk.Button(RightFrame, text="Register", width=25, command=registerToDatabase)
     Register.place(x=100, y=225)
 
     def backToLogin():
