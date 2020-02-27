@@ -37,8 +37,22 @@ PassLabel.place(x=5, y=150)
 PassEntry = ttk.Entry(RightFrame, width=25, show="*")
 PassEntry.place(x=150, y=160)
 
+def login():
+    username = UserEntry.get()
+    password = PassEntry.get()
+    databaser.cursor.execute("""
+    select username, password
+    from usuarios 
+    where username=? and password=?
+    """, (username, password))
+    verificaLogin = databaser.cursor.fetchone()
+    if verificaLogin is not None:
+        messagebox.showinfo(title="Login Info", message="Acesso confirmado")
+    else:
+        messagebox.showerror(title="Login Error", message="Acesso negado")
+
 # Botoes
-LoginButton = ttk.Button(RightFrame, text="Login", width=25)
+LoginButton = ttk.Button(RightFrame, text="Login", width=25, command=login)
 LoginButton.place(x=100, y=225)
 
 
@@ -66,12 +80,15 @@ def register():
         username = UserEntry.get()
         password = PassEntry.get()
 
-        databaser.cursor.execute("""
-        insert into usuarios(name, email, username, password)
-        values (?, ?, ?, ?)
-        """, (name, email, username, password))
-        databaser.conn.commit()
-        messagebox.showinfo(title="Register Infor", message="Registrado com sucesso")
+        if name == "" or email == "" or username == "" or password == "":
+            messagebox.showerror(title="Register Error", message="Preencha todos os campos")
+        else:
+            databaser.cursor.execute("""
+            insert into usuarios(name, email, username, password)
+            values (?, ?, ?, ?)
+            """, (name, email, username, password))
+            databaser.conn.commit()
+            messagebox.showinfo(title="Register Infor", message="Registrado com sucesso")
 
     # Inserindo botões de cadastro
     Register = ttk.Button(RightFrame, text="Register", width=25, command=registerToDatabase)
